@@ -1,4 +1,4 @@
-import conf from "../conf.js";
+import conf from "../conf/conf.js";
 import { Client, ID, Databases, Storage, Query } from "appwrite";
 
 export class Service {
@@ -67,6 +67,7 @@ export class Service {
 
   async getPost(slug) {
     try {
+      console.log("getpost");
       return await this.databases.getDocument(
         conf.appwriteDatabaseId,
         conf.appwriteCollectionId,
@@ -78,15 +79,23 @@ export class Service {
     }
   }
 
-  async getPosts(queries = [Query.equal("staus", "active")]) {
+  async getPosts() {
+    // log
+    // console.log(
+    //   "we are in the appwrite-getPosts",
+    //   conf.appwriteDatabaseId,
+    //   conf.appwriteCollectionId,
+    //   queries
+    // );
     try {
       return await this.databases.listDocuments(
         conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
-        queries
+        conf.appwriteCollectionId
+        // queries
       );
     } catch (error) {
       console.log("Appwrite :: getPosts :: error ", error);
+      return false;
     }
   }
 
@@ -112,6 +121,10 @@ export class Service {
       console.log("Appwrite :: deleteFile :: error ", error);
       return false;
     }
+  }
+
+  getFilePreview(fileId) {
+    return this.bucket.getFilePreview(conf.appwriteBucketId, fileId);
   }
 }
 

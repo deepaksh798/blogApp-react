@@ -5,7 +5,6 @@ import { Button, Input, Logo } from "./index";
 import {useDispatch} from "react-redux";
 import authService from "../appwrite/auth";
 import { useForm } from "react-hook-form";
-import { data } from 'autoprefixer';
 
 function Login() {
     const navigate = useNavigate()
